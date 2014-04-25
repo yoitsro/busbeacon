@@ -9,7 +9,7 @@ var BASE_URL = 'http://ws.mybustracker.co.uk/?module=json&key=';
 
 var config = {
     hostname: 'localhost',
-    port: +process.env.PORT || 9001
+    port: process.env.PORT || 9001
 };
 
 var routes = {};
@@ -135,13 +135,13 @@ var getTravelTimeForJourney = function(stopId, journey) {
         // Set its hours and minutes
         if(hours < now.getHours()) {
             arrivalTime.setDate(arrivalTime.getDate()+1);
-            arrivalTime.setHours(hours);
         };
 
+        arrivalTime.setHours(hours);
         arrivalTime.setMinutes(minutes);
 
         var diffMs = arrivalTime - now;
-        var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); 
+        var diffMins = Math.round(diffMs / (1000*60)); 
 
         travelInfo.arrivalMinutes = diffMins;
         return true;
